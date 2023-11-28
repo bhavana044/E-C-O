@@ -6,7 +6,7 @@ import {
   decreaseQty,
   deleteProduct,
 } from "../app/features/cart/cartSlice";
-
+import axios from 'axios'
 const Cart = () => {
   const { cartList } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -22,6 +22,23 @@ const Cart = () => {
     //   setCartItem(JSON.parse(storedCart));
     // }
   }, []);
+  // const push= ()=>{
+  //   axios.post
+  // }
+  const push = () => {
+    axios.post('http://localhost:5000/register', { totalPrice })
+      .then((response) => {
+        const result = response.data;
+        if (result) {
+          alert("Data saved successfully");
+          
+        }
+      })
+      .catch((error) => {
+        console.error("POST request error:", error);
+        alert("Something went wrong when saving data.");
+      });
+  }
   return (
     <section className="cart-items">
       <Container>
@@ -79,11 +96,11 @@ const Cart = () => {
           <Col md={4}>
             <div className="cart-total">
               <h2>Cart Summary</h2>
-              <button onClick={''}>pay here</button>
               <br/>
               <div className=" d_flex">
                 <h4>Total Price :</h4>
                 <h3>${totalPrice}.00</h3>
+              <button onClick={push}>pay here</button>
               </div>
             </div>
           </Col>
